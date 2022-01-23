@@ -3,6 +3,7 @@ import { GameInfo, Hand, Player } from "rps-shared";
 export default function Game({ info }: { info: GameInfo; }) {
   return (
     <div style={{ marginBottom: 20, backgroundColor: 'grey', display: 'flex', gap: 30 }}>
+      {/* <div>Date: {new Date(info.t).toLocaleString()}</div> */}
       <PlayerInfo player={info.playerA} winner={isWinner(info.playerA, info.playerB)} />
       <PlayerInfo player={info.playerB} winner={isWinner(info.playerB, info.playerA)} />
       {isTie(info.playerA, info.playerB) ? <div>Tie!</div> : undefined}
@@ -29,7 +30,7 @@ export function handToIcon(hand: Hand | undefined) {
       return '✌️';
     default:
       return '❔';
-      // return '🤔';
+    // return '🤔';
   }
 }
 

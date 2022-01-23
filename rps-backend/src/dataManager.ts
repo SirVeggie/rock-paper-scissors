@@ -72,7 +72,7 @@ async function queryData() {
             console.log(`Error: ${e}`);
         }
         
-        if (record.length) {
+        if (counter) {
             updateHistory(record);
         }
     }

@@ -18,9 +18,25 @@ app.use(morgan('tiny'));
 app.get('/api/player/:name', (req, res) => {
     const name = modifyName(req.params.name);
     const data = manager.history[name];
-    
+
     if (!data)
         return res.status(404).end();
+    res.json(data);
+});
+
+app.get('/api/player/:name/:count-:page', (req, res, next) => {
+    const name = modifyName(req.params.name);
+    const count = Number(req.params.count);
+    const page = Number(req.params.page);
+    let data = manager.history[name];
+
+    if (isNaN(count) || isNaN(page)) {
+        return next();
+    }
+
+    if (!data)
+        return res.status(404).end();
+    data = data.sort((a, b) => b.t - a.t).slice(page * count, page * count + count);
     res.json(data);
 });
 

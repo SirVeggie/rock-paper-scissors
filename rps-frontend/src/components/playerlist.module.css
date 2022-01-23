@@ -1,0 +1,27 @@
+
+.item {
+    height: 40px;
+    border: 1px solid #0003;
+    border-width: 1px 0px 0px 0px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: #F9F7F0;
+    padding-left: 15px;
+    color: #38302e;
+    
+    transition: filter 100ms ease;
+}
+
+.item:last-of-type {
+    border-width: 1px 0px;
+    margin-bottom: 20px;
+}
+
+.item:hover {
+    filter: brightness(0.9);
+}
+
+.item:active {
+    filter: brightness(0.8);
+}

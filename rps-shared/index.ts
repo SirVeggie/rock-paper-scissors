@@ -23,7 +23,7 @@ export type Data = {
 export type WebEventType = 'player_history' | 'player_list';
 export type WebEvent = {
     type: WebEventType;
-    content: any
+    content?: any
 };
 
 export function sleep(ms: number) {

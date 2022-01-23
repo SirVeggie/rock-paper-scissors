@@ -3,6 +3,7 @@
     --height: 50px;
     position: sticky;
     background-color: #38302e;
+    top: 0;
 }
 
 .inner {
@@ -12,7 +13,6 @@
 
 .inner span {
     color: #f3efe0;
-    margin-left: 20px;
     font-size: calc(var(--height) * 0.5);
     flex-grow: 1;
 }

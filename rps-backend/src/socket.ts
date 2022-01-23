@@ -24,6 +24,8 @@ function handleMessage(ws: WebSocket, event: MessageEvent) {
         listSubscribers.push(ws);
     } else if (data.type === 'player_history') {
         if (typeof data.content === 'string') {
+            if (!playerSubscribers[data.content])
+                playerSubscribers[data.content] = [];
             playerSubscribers[data.content].push(ws);
         }
     }
@@ -31,7 +33,7 @@ function handleMessage(ws: WebSocket, event: MessageEvent) {
 
 function handleClose(ws: WebSocket) {
     console.log('client disconnected');
-    
+
     listSubscribers = listSubscribers.filter(x => x !== ws);
     forEach(playerSubscribers, (item, key) => {
         playerSubscribers[key] = item.filter(x => x !== ws);

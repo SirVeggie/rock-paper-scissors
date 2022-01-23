@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { WebEventType } from 'rps-shared';
+import { WebEvent } from 'rps-shared';
 
-export function useLocalSocket(type: WebEventType, onmessage?: (data: any, ws: WebSocket) => void) {
+export function useLocalSocket(data: WebEvent, onmessage?: (data: any, ws: WebSocket) => void) {
     const host = window.location.host;
     const url = host.includes('localhost') ? 'ws://localhost:3001' : `ws://${host}`;
-    return useWebSocket(url, ws => ws.send(JSON.stringify({ type })), onmessage);
+    return useWebSocket(url, ws => ws.send(JSON.stringify(data)), onmessage);
 }
 
 export function useWebSocket(url: string, onOpen?: (ws: WebSocket) => void, onmessage?: (data: any, ws: WebSocket) => void) {
