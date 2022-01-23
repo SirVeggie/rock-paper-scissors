@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { modifyName, sleep } from 'rps-shared';
-import fs from 'fs';
 import { Data, GameInfo } from 'rps-shared';
 import { Socket } from './socket';
 import { forEach } from 'lodash';
@@ -10,7 +9,7 @@ const history: Record<string, GameInfo[]> = {};
 const userlist = new Set<string>();
 const knownIds = new Set<string>();
 const updateDelay = 10000;
-let ws: Socket = null as unknown as Socket;
+let ws: Socket = null as any;
 
 async function start(socket: Socket) {
     ws = socket;

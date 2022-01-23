@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { GameInfo } from 'rps-shared';
 import { useWebSocket } from '../hooks/useWebSocket';
+import Container from './Container';
 import Game from './Game';
 
 export default function Live() {
   const [events, setEvents] = useState([] as GameInfo[]);
   const [connected] = useWebSocket('ws://bad-api-assignment.reaktor.com/rps/live', undefined, async info => {
     info = JSON.parse(info);
-    
+
     if (info.type === 'GAME_BEGIN') {
       setEvents(e => [...e, info]);
     } else {
@@ -18,12 +19,12 @@ export default function Live() {
   });
 
   return (
-    <div>
-      {connected ? 'Connected!' : 'Loading...'}
+    <Container>
+      <h1>Live matches{connected ? '' : ' (Loading...)'}</h1>
       {connected ? <div>
         {events.sort((a, b) => a.t - b.t).map(x => <Game info={x} key={x.gameId} />)}
       </div> : <div>No events</div>}
-    </div>
+    </Container>
   );
 }
 

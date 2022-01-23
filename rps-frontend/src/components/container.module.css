@@ -1,0 +1,16 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.container div {
+    min-width: 700px;
+    max-width: 1000px;
+}
+
+@media (max-width: 750px) {
+    .container div {
+        min-width: calc(100% - 50px);
+    }
+}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { modifyName } from "rps-shared";
 import { useLocalSocket } from "../hooks/useWebSocket";
+import Container from "./Container";
 
 export default function PlayerList() {
   const [players, setPlayers] = useState([] as string[]);
@@ -15,14 +16,12 @@ export default function PlayerList() {
   }, []);
 
   return (
-    <div>
-      <h1>
-        {connected ? 'Connected' : 'Loading...'}
-      </h1>
-      <div>{players.length} players found</div>
+    <Container>
+      <h1 style={{ marginBottom: 5 }}>Players</h1>
+      <div style={{ marginBottom: 25 }}>{players.length} players found</div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {players.map(x => <Link to={`/player/${modifyName(x)}/10-0`} key={x}>{x}</Link>)}
       </div>
-    </div>
+    </Container>
   );
 }
