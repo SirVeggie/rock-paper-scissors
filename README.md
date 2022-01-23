@@ -1,3 +1,3 @@
-# rock-paper-scissors
+# Reaktor's Rock Paper Scissors pre-assignment
 
 App running in: ~
