@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { GameInfo, sleep } from 'rps-shared';
-import { fetchPlayers } from './backend';
+import { fetchPlayerHistoryCache, fetchPlayers } from './backend';
 import PlayerHistory from './components/PlayerHistory';
 import Live from './components/Live';
 import NavigateDyn from './components/NavigateDyn';
@@ -12,6 +12,7 @@ import Titlebar from './components/Titlebar';
 import { useLocalSocket, useWebSocket } from './hooks/useWebSocket';
 import { addPlayers, setPlayers } from './reducers/playerReducer';
 import { addLive, removeLive, updateLive } from './reducers/liveReducer';
+import { setHistory } from './reducers/historyReducer';
 
 export default function App() {
   const location = useLocation();
@@ -35,13 +36,13 @@ export default function App() {
   
   useEffect(() => {
     fetchPlayers().then(x => dispatch(setPlayers(x)));
+    fetchPlayerHistoryCache(50).then(x => dispatch(setHistory(x)));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   return (
     <div className='app'>
       <Titlebar />
-      {!isLive && <Live sidebar />}
       <Routes>
         <Route path='/' element={<Navigate to='/live' />} />
         <Route path='/live' element={<Live />} />
@@ -51,6 +52,7 @@ export default function App() {
         <Route path='/player/:name/:amount-:page' element={<PlayerHistory />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      {!isLive && <Live sidebar />}
     </div>
   );
 }

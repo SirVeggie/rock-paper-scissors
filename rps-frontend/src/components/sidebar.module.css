@@ -4,3 +4,17 @@
     top: 50px;
     left: 25px;
 }
+
+@media only screen and (max-width: 1400px) {
+    .sidebar {
+        position: initial;
+        top: inital;
+        left: initial;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .inner {
+        width: 700px;
+    }
+}

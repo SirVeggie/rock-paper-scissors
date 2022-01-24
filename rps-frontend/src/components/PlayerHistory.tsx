@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { modifyName } from "rps-shared";
 import { GameInfo, Hand } from "rps-shared";
-import { fetchPlayerHistory, fetchPlayerHistoryExact } from "../backend";
+import { fetchPlayerHistory } from "../backend";
 import { useLocalSocket } from "../hooks/useWebSocket";
 import { StateType } from "../store";
 import Container from "./Container";
@@ -17,7 +17,8 @@ export default function PlayerHistory() {
   const navigate = useNavigate();
   const { name, page, amount } = useParams();
   const players = useSelector((state: StateType) => state.players);
-  const [history, setHistory] = useState([] as GameInfo[]);
+  const historyCache = useSelector((state: StateType) => state.history);
+  const [history, setHistory] = useState(historyCache[name ?? '']);
   const [input, setInput] = useState('');
   const update = (a: GameInfo[]) => setHistory(e => uniqBy([...e, ...a], x => x.gameId).sort((a, b) => b.t - a.t));
   const changePage = (page: number) => navigate(`/player/${name}/${amount}-${page}`);
@@ -26,7 +27,6 @@ export default function PlayerHistory() {
   useLocalSocket({ type: 'player_history', content: name }, update);
 
   useEffect(() => {
-    fetchPlayerHistoryExact(name as string, Number(page), Number(amount)).then(update);
     fetchPlayerHistory(name as string).then(update);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);

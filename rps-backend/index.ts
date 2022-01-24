@@ -44,6 +44,19 @@ app.get('/api/players', (req, res) => {
     res.json(Array.from(manager.userlist));
 });
 
+app.get('/api/playercache/:amount', (req, res) => {
+    let amount = Number(req.params.amount);
+    const data: typeof manager.history = {};
+
+    amount = isNaN(amount) ? 10 : amount;
+
+    Object.keys(manager.history).forEach(x => {
+        data[x] = manager.history[x].slice(0, amount);
+    });
+
+    res.json(data);
+});
+
 //====| other |====//
 
 function unknownEndpoint(req: any, res: any) {

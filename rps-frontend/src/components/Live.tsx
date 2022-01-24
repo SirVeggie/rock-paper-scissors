@@ -20,7 +20,9 @@ export default function Live({ sidebar }: LiveProps) {
 function Sidebar({ children }: { children: ReactNode | ReactNode[]; }) {
   return (
     <div className={style.sidebar}>
-      {children}
+      <div className={style.inner}>
+        {children}
+      </div>
     </div>
   );
 }
