@@ -16,7 +16,7 @@ import Paging from "./Paging";
 export default function PlayerHistory() {
   const navigate = useNavigate();
   const { name, page, amount } = useParams();
-  const players = useSelector((state: StateType) => state.data.players);
+  const players = useSelector((state: StateType) => state.players);
   const [history, setHistory] = useState([] as GameInfo[]);
   const [input, setInput] = useState('');
   const update = (a: GameInfo[]) => setHistory(e => uniqBy([...e, ...a], x => x.gameId).sort((a, b) => b.t - a.t));

@@ -10,7 +10,8 @@ import NotFound from './components/NotFound';
 import PlayerList from './components/PlayerList';
 import Titlebar from './components/Titlebar';
 import { useLocalSocket, useWebSocket } from './hooks/useWebSocket';
-import { addLive, addPlayers, removeLive, setPlayers, updateLive } from './reducers/dataReducer';
+import { addPlayers, setPlayers } from './reducers/playerReducer';
+import { addLive, removeLive, updateLive } from './reducers/liveReducer';
 
 export default function App() {
   const location = useLocation();

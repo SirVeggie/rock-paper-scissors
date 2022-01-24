@@ -1,12 +1,16 @@
 import { combineReducers, createStore } from 'redux';
-import dataReducer, { AppData } from './reducers/dataReducer';
+import { GameInfo } from 'rps-shared';
+import liveReducer from './reducers/liveReducer';
+import playerReducer from './reducers/playerReducer';
 
 export type StateType = {
-    data: AppData;
+    players: string[];
+    live: GameInfo[];
 }
 
 const reducer = combineReducers({
-    data: dataReducer
+    players: playerReducer,
+    live: liveReducer
 });
 
 const store = createStore(reducer);

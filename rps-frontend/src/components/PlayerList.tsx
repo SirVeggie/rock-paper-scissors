@@ -10,7 +10,7 @@ import style from './playerlist.module.css';
 export default function PlayerList() {
   const navigate = useNavigate();
   const { page } = useParams();
-  const players = useSelector((state: StateType) => state.data.players);
+  const players = useSelector((state: StateType) => state.players);
   const [input, setInput] = useState('');
   const changePage = (page: number) => navigate('/players/' + page);
   

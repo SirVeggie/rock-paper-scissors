@@ -26,7 +26,7 @@ function Sidebar({ children }: { children: ReactNode | ReactNode[]; }) {
 }
 
 function InnerLive() {
-  const games = useSelector((state: StateType) => state.data.liveGames);
+  const games = useSelector((state: StateType) => state.live);
 
   return (
     <div>
