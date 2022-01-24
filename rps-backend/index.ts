@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { createServer } from 'https';
+// import { createServer } from 'http';
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -74,7 +74,10 @@ app.use(unknownEndpoint);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
-const server = createServer(app).listen(PORT);
+// const server = createServer(app).listen(PORT);
+const server = app.listen(PORT, () => {
+    console.log('Server running on port ' + PORT);
+});
 
 socket.create(server);
 manager.start(socket);
