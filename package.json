@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "backend/build/index.js",
+  "engines": { "node": "16.13.2" },
   "scripts": {
     "start": "cd rps-backend && npm start",
     "build": "cd rps-shared && npm i && npm run build && cd ../rps-backend && npm i && npm run build && cd ../rps-frontend && npm i && npm run build",
