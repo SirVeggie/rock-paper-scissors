@@ -22,7 +22,7 @@ export default function App() {
   
   useLocalSocket({ type: 'player_list' }, update);
   
-  useWebSocket('ws://bad-api-assignment.reaktor.com/rps/live', undefined, async info => {
+  useWebSocket('wss://bad-api-assignment.reaktor.com/rps/live', undefined, async info => {
     const game = JSON.parse(info) as GameInfo;
     
     if (game.type === 'GAME_BEGIN') {

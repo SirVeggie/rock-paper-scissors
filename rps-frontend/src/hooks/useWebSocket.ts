@@ -3,7 +3,7 @@ import { WebEvent } from 'rps-shared';
 
 export function useLocalSocket(data: WebEvent, onmessage?: (data: any, ws: WebSocket) => void) {
     const host = window.location.host;
-    const url = host.includes('localhost') ? 'ws://localhost:3001' : `ws://${host}`;
+    const url = host.includes('localhost') ? 'ws://localhost:3001' : `wss://${host}`;
     return useWebSocket(url, ws => ws.send(JSON.stringify(data)), onmessage);
 }
 
