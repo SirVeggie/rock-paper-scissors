@@ -13,7 +13,7 @@ let ws: Socket = null as any;
 
 async function start(socket: Socket) {
     ws = socket;
-    
+
     while (true) {
         await queryData();
         await sleep(updateDelay);
@@ -33,15 +33,21 @@ function updateHistory(record: Record<string, GameInfo[]>) {
     });
 }
 
+function swapPlayers(name: string, game: GameInfo) {
+    if (game.playerB.name === name)
+        return { ...game, playerA: game.playerB, playerB: game.playerA };
+    return game;
+}
+
 // Query assumes old data remains unchanged
 async function queryData() {
     let cursor = '/rps/history';
     let page = 0;
     let counter = 0;
-    
+
     while (cursor) {
         const record: Record<string, GameInfo[]> = {};
-        
+
         try {
             console.log(`${++page}: Fetching data ${cursor}`);
             const data: Data = (await axios.get(url + cursor)).data;
@@ -54,29 +60,31 @@ async function queryData() {
                     cursor = '';
                     break;
                 }
-                
+
                 counter++;
                 knownIds.add(item.gameId);
-                
+
                 const playerA = item.playerA.name;
                 const playerB = item.playerB.name;
                 addPlayer(playerA);
                 addPlayer(playerB);
-                addToRecord(history, modifyName(playerA), item);
-                addToRecord(history, modifyName(playerB), item);
-                addToRecord(record, modifyName(playerA), item);
-                addToRecord(record, modifyName(playerB), item);
+                addToRecord(history, modifyName(playerA), swapPlayers(playerA, item));
+                addToRecord(history, modifyName(playerB), swapPlayers(playerB, item));
+                addToRecord(record, modifyName(playerA), swapPlayers(playerA, item));
+                addToRecord(record, modifyName(playerB), swapPlayers(playerB, item));
             }
         } catch (e: any) {
             await sleep(1000);
             console.log(`Error: ${e}`);
         }
-        
+
         if (counter) {
             updateHistory(record);
         }
+        
+        await sleep(5000);
     }
-    
+
     if (counter) {
         console.log(`Added ${counter} games`);
     }

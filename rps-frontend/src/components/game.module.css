@@ -1,1 +1,22 @@
 
+.game {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #0003;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.player {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.icon {
+    margin: 0px 10px;
+}
+
+.name {
+    text-decoration: none;
+    color: #38302e;
+}

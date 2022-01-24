@@ -36,7 +36,7 @@ app.get('/api/player/:name/:count-:page', (req, res, next) => {
 
     if (!data)
         return res.status(404).end();
-    data = data.sort((a, b) => b.t - a.t).slice(page * count, page * count + count);
+    data = data.sort((a, b) => b.t - a.t).slice((page - 1) * count, (page - 1) * count + count);
     res.json(data);
 });
 

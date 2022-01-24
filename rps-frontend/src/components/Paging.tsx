@@ -1,26 +1,19 @@
 import { ceil } from "lodash";
-import { CSSProperties, ReactNode, useState } from "react";
+import { CSSProperties, ReactNode } from "react";
 import css from './paging.module.css';
-import cx from 'classnames';
 
 type PagingProps = {
-  index: number;
+  page: number;
   count: number;
   children: ReactNode[];
   style?: CSSProperties;
   pageFunc?: (page: number) => void;
 };
 
-export default function Paging({ index, count, children, style, pageFunc }: PagingProps) {
-  const [page, setPage] = useState(index);
-
+export default function Paging({ page, count, children, style, pageFunc }: PagingProps) {
   const maxPage = ceil(children.length / count);
   const content = children.slice((page - 1) * count, (page - 1) * count + count);
-  
-  const changePage = (page: number) => {
-    pageFunc?.call(null, page);
-    setPage(page);
-  };
+  const changePage = (page: number) => pageFunc?.call(null, page);
 
   return (
     <div className={css.paging}>
@@ -33,7 +26,7 @@ export default function Paging({ index, count, children, style, pageFunc }: Pagi
           disabled={page <= 1}
           onClick={() => changePage(page - 1)}
         />
-        <span>{page}</span>
+        <span>{page} of {maxPage}</span>
         <Button
           text='>'
           disabled={page >= maxPage}

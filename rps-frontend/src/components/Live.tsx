@@ -1,33 +1,39 @@
-import { useState } from 'react';
-import { GameInfo } from 'rps-shared';
-import { useWebSocket } from '../hooks/useWebSocket';
+import { ReactNode } from 'react';
+import { useSelector } from 'react-redux';
+import { StateType } from '../store';
 import Container from './Container';
 import Game from './Game';
+import style from './sidebar.module.css';
 
-export default function Live() {
-  const [events, setEvents] = useState([] as GameInfo[]);
-  const [connected] = useWebSocket('ws://bad-api-assignment.reaktor.com/rps/live', undefined, async info => {
-    info = JSON.parse(info);
+type LiveProps = {
+  sidebar?: boolean;
+};
 
-    if (info.type === 'GAME_BEGIN') {
-      setEvents(e => [...e, info]);
-    } else {
-      setEvents(e => e.map(x => x.gameId === info.gameId ? info : x));
-      await sleep(5000);
-      setEvents(e => e.filter(x => x.gameId !== info.gameId));
-    }
-  });
+export default function Live({ sidebar }: LiveProps) {
 
+  return <>{sidebar
+    ? <Sidebar children={<InnerLive />} />
+    : <Container children={<InnerLive />} />}
+  </>;
+}
+
+function Sidebar({ children }: { children: ReactNode | ReactNode[]; }) {
   return (
-    <Container>
-      <h1>Live matches{connected ? '' : ' (Loading...)'}</h1>
-      {connected ? <div>
-        {events.sort((a, b) => a.t - b.t).map(x => <Game info={x} key={x.gameId} />)}
-      </div> : <div>No events</div>}
-    </Container>
+    <div className={style.sidebar}>
+      {children}
+    </div>
   );
 }
 
-function sleep(ms: number) {
-  return new Promise(res => setTimeout(res, ms));
+function InnerLive() {
+  const games = useSelector((state: StateType) => state.data.liveGames);
+
+  return (
+    <div>
+      <h1>Live matches</h1>
+      <div>
+        {games.map(x => <Game noDate info={x} key={x.gameId} />)}
+      </div>
+    </div>
+  );
 }

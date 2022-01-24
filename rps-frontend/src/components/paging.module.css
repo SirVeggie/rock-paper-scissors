@@ -1,10 +1,16 @@
 
 .paging {
-    
+    margin-bottom: 10px;
 }
 
 .paging span {
     margin: 0 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button {

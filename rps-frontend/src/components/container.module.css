@@ -4,13 +4,13 @@
     justify-content: center;
 }
 
-.container div {
+.container .inner {
     min-width: 700px;
     max-width: 1000px;
 }
 
 @media (max-width: 750px) {
-    .container div {
+    .container .inner {
         min-width: calc(100% - 50px);
     }
 }
