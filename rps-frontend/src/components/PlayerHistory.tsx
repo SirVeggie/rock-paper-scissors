@@ -34,17 +34,19 @@ export default function PlayerHistory() {
   if (isNaN(Number(page)) || isNaN(Number(amount))) {
     return <NavigateDyn to='/app/player/:name' />;
   }
+  
+  const filtered = history.filter(matchInput(input));
 
   return (
     <Container>
       <h1 style={{ marginBottom: 5 }}>Match history of {realName}</h1>
-      <Stats name={realName} history={history} />
+      <Stats name={realName} history={filtered} />
 
       <div>Search for opponents:</div>
       <input type='text' onChange={event => setInput(event.target.value)} style={{ marginBottom: 25 }} />
 
       <Paging page={Number(page)} count={Number(amount)} pageFunc={changePage}>
-        {history.filter(matchInput(input)).map(x => <Game info={x} key={x.gameId} />)}
+        {filtered.map(x => <Game info={x} key={x.gameId} />)}
       </Paging>
     </Container>
   );
@@ -54,8 +56,8 @@ function Stats({ history, name }: { history: GameInfo[], name?: string; }) {
   const mostResult = maxBy(Object.entries(countBy(history, x => x.playerA.played)), x => x[1]) ?? [undefined];
   const mostPlayed = handToIcon(mostResult[0] as Hand | undefined);
 
-  const wins = countBy(history.map(x => isWinner(x.playerA, x.playerB)))['true'];
-  const ties = countBy(history.map(x => isTie(x.playerA, x.playerB)))['true'];
+  const wins = countBy(history.map(x => isWinner(x.playerA, x.playerB)))['true'] ?? 0;
+  const ties = countBy(history.map(x => isTie(x.playerA, x.playerB)))['true'] ?? 0;
   const losses = history.length - wins - ties;
   const winRatio = (wins / history.length * 100).toFixed(1);
 
