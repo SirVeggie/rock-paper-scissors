@@ -12,10 +12,10 @@ export default function PlayerList() {
   const { page } = useParams();
   const players = useSelector((state: StateType) => state.players);
   const [input, setInput] = useState('');
-  const changePage = (page: number) => navigate('/players/' + page);
+  const changePage = (page: number) => navigate('/app/players/' + page);
   
   if (isNaN(Number(page))) {
-    return <Navigate to='/players' />
+    return <Navigate to='/app/players' />
   }
 
   return (
@@ -28,7 +28,7 @@ export default function PlayerList() {
       
       <Paging page={Number(page)} count={10} pageFunc={changePage} style={{ display: 'flex', flexDirection: 'column' }}>
         {players.filter(x => x.toLowerCase().includes(input.toLowerCase())).map(x =>
-          <Link className={style.item} to={`/player/${modifyName(x)}/10-1`} key={x}>{x}</Link>
+          <Link className={style.item} to={`/app/player/${modifyName(x)}/10-1`} key={x}>{x}</Link>
         )}
       </Paging>
     </Container>

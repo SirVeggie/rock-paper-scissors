@@ -58,6 +58,15 @@ app.get('/api/playercache/:amount', (req, res) => {
     res.json(data);
 });
 
+app.get('*', (req, res, next) => {
+    let path = (req as any).params['0'];
+    if (path.includes('/app/')) {
+        res.sendFile(`${__dirname}/index.html`);
+    } else {
+        next();
+    }
+});
+
 //====| other |====//
 
 function unknownEndpoint(req: any, res: any) {

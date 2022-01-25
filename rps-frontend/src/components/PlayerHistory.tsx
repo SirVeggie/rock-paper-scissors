@@ -18,10 +18,10 @@ export default function PlayerHistory() {
   const { name, page, amount } = useParams();
   const players = useSelector((state: StateType) => state.players);
   const historyCache = useSelector((state: StateType) => state.history);
-  const [history, setHistory] = useState(historyCache[name ?? '']);
+  const [history, setHistory] = useState(historyCache[name ?? ''] ?? []);
   const [input, setInput] = useState('');
   const update = (a: GameInfo[]) => setHistory(e => uniqBy([...e, ...a], x => x.gameId).sort((a, b) => b.t - a.t));
-  const changePage = (page: number) => navigate(`/player/${name}/${amount}-${page}`);
+  const changePage = (page: number) => navigate(`/app/player/${name}/${amount}-${page}`);
   const realName = players.find(x => modifyName(x) === name);
 
   useLocalSocket({ type: 'player_history', content: name }, update);
@@ -32,7 +32,7 @@ export default function PlayerHistory() {
   }, [name]);
 
   if (isNaN(Number(page)) || isNaN(Number(amount))) {
-    return <NavigateDyn to='/player/:name' />;
+    return <NavigateDyn to='/app/player/:name' />;
   }
 
   return (

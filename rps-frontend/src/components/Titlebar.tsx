@@ -7,8 +7,8 @@ export default function Titlebar() {
     <nav id='navbar' className={style.navbar}>
       <Container className={style.inner}>
         <span>Rock Paper Scissors</span>
-        <Link to='/live'>Live</Link>
-        <Link to='/players'>History</Link>
+        <Link to='/app/live'>Live</Link>
+        <Link to='/app/players'>History</Link>
       </Container>
     </nav>
   );

@@ -6,7 +6,9 @@
   "engines": { "node": "16.13.2" },
   "scripts": {
     "start": "cd rps-backend && npm start",
-    "heroku-prebuild": "cd rps-shared && npm i && npm run build && cd ../rps-backend && npm i && npm run build && cd ../rps-frontend && npm i && npm run build"
+    "heroku-prebuild": "cd rps-shared && npm i && npm run build && cd ../rps-backend && npm i && npm run build && cd ../rps-frontend && npm i && npm run build",
+    "deploy": "git push heroku master",
+    "prod": "npm run heroku-prebuild && npm start"
   },
   "repository": {
     "type": "git",

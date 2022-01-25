@@ -34,7 +34,7 @@ export type PlayerProps = {
 
 export function PlayerInfo({ player, winner, tie, left }: PlayerProps) {
   const icon = <span className={style.icon}>{handToIcon(player.played)}</span>;
-  const link = `/player/${modifyName(player.name)}`;
+  const link = `/app/player/${modifyName(player.name)}`;
   
   return (
     <div className={style.player}>

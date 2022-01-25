@@ -18,7 +18,7 @@ export default function App() {
   const location = useLocation();
   const dispatch = useDispatch();
   const update = (a: string[]) => dispatch(addPlayers(a));
-  const isLive = location.pathname === '/live';
+  const isLive = location.pathname === '/app/live';
   
   useLocalSocket({ type: 'player_list' }, update);
   
@@ -44,12 +44,12 @@ export default function App() {
     <div className='app'>
       <Titlebar />
       <Routes>
-        <Route path='/' element={<Navigate to='/live' />} />
-        <Route path='/live' element={<Live />} />
-        <Route path='/players' element={<Navigate to='/players/1' />} />
-        <Route path='/players/:page' element={<PlayerList />} />
-        <Route path='/player/:name' element={<NavigateDyn to='/player/:name/10-1' />} />
-        <Route path='/player/:name/:amount-:page' element={<PlayerHistory />} />
+        <Route path='/' element={<Navigate to='/app/live' />} />
+        <Route path='/app/live' element={<Live />} />
+        <Route path='/app/players' element={<Navigate to='/app/players/1' />} />
+        <Route path='/app/players/:page' element={<PlayerList />} />
+        <Route path='/app/player/:name' element={<NavigateDyn to='/app/player/:name/10-1' />} />
+        <Route path='/app/player/:name/:amount-:page' element={<PlayerHistory />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       {!isLive && <Live sidebar />}
