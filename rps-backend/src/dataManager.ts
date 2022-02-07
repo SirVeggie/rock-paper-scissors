@@ -81,8 +81,6 @@ async function queryData() {
         if (counter) {
             updateHistory(record);
         }
-        
-        await sleep(5000);
     }
 
     if (counter) {
