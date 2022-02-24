@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import manager from './src/dataManager';
 import socket from './src/socket';
 import { modifyName } from 'rps-shared';
-import path from 'path';
 
 const app = express();
 
