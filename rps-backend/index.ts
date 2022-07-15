@@ -13,6 +13,12 @@ app.use(express.static('build'));
 app.use(cors());
 app.use(morgan('tiny'));
 
+//====| health check |====//
+
+app.get('/api/health', (req, res) => {
+    res.send('ok');
+});
+
 //====| routes |====//
 
 app.get('/api/player/:name', (req, res) => {
