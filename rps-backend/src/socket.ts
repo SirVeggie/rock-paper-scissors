@@ -4,7 +4,7 @@ import { Server } from 'http';
 import { forEach } from 'lodash';
 
 let wss: WebSocketServer = null as any;
-let playerSubscribers: Record<string, WebSocket[]> = {};
+const playerSubscribers: Record<string, WebSocket[]> = {};
 let listSubscribers: WebSocket[] = [];
 
 function create(server: Server) {

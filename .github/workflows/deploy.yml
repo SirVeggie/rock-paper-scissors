@@ -1,0 +1,64 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: build
+        run: npm run build
+      - name: lint
+        run: npm run lint
+      - name: heroku
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_TOKEN }}
+          heroku_app_name: 'reaktor-rock-paper-scissors'
+          heroku_email: 'sirveggie@hotmail.com'
+          healthcheck: 'https://reaktor-rock-paper-scissors.herokuapp.com/api/health'
+          checkstring: 'ok'
+          delay: 5
+          rollbackonhealthcheckfailed: true
+        
+      - name: Deployment success
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ success() && github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        with:
+          severity: info
+          text: New version deployed
+          description: to https://reaktor-rock-paper-scissors.herokuapp.com/app/live
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          
+      - name: Deployment failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ failure() && github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        with:
+          severity: error
+          text: Build failed
+          description: Commit ${{ github.event.head_commit.url }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          
+  tag_release:
+    if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+    needs: [pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: 'patch'

@@ -34,6 +34,7 @@ export function useWebSocket(url: string, onOpen?: (ws: WebSocket) => void, onme
             ws.onclose = null;
             ws.close();
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const send = (data: any) => {

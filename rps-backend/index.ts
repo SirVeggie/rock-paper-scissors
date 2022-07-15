@@ -13,6 +13,12 @@ app.use(express.static('build'));
 app.use(cors());
 app.use(morgan('tiny'));
 
+//====| health check |====//
+
+app.get('/api/health', (req, res) => {
+    res.send('ok');
+});
+
 //====| routes |====//
 
 app.get('/api/player/:name', (req, res) => {
@@ -58,7 +64,7 @@ app.get('/api/playercache/:amount', (req, res) => {
 });
 
 app.get('*', (req, res, next) => {
-    let path = (req as any).params['0'];
+    const path = (req as any).params['0'];
     if (path.includes('/app/')) {
         res.sendFile(`${__dirname}/index.html`);
     } else {

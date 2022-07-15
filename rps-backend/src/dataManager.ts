@@ -14,6 +14,7 @@ let ws: Socket = null as any;
 async function start(socket: Socket) {
     ws = socket;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
         await queryData();
         await sleep(updateDelay);
